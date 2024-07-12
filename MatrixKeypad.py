@@ -3,6 +3,7 @@ import Keypad   #import module Keypad
 import gate
 from time import sleep
 import lcddisplay
+import camera_handler
 ROWS = 4        # number of rows of the Keypad
 COLS = 4        #number of columns of the Keypad
 keys =  [   '1','2','3','A',    #key code
@@ -39,6 +40,7 @@ def checkPassword():
             print(f'Welcome {name}')
             lcddisplay.messagedisplay(f'Welcome {name}','Gate Openning')
             gate.gateOpen()
+            camera_handler.capture()
             sleep(4)
             lcddisplay.lcd1602.clear()
             lcddisplay.messagedisplay('Gate Closing !!')
@@ -50,4 +52,7 @@ def checkPassword():
        
     if passwordmatch == False:
         print('Wrong password entered')
+        lcddisplay.messagedisplay('Wrong Password!!', 'Try Again')
+        sleep(3)
+        lcddisplay.lcd1602.clear()
         entrypin = ''

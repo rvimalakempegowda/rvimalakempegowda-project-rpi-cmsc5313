@@ -1,10 +1,3 @@
-#!/usr/bin/env python3
-#############################################################################
-# Filename    : Nightlamp.py
-# Description : Control LED with Photoresistor
-# Author      : www.freenove.com
-# modification: 2023/05/11
-########################################################################
 from gpiozero import PWMLED
 import time
 from ADCDevice import *
@@ -13,7 +6,7 @@ ledPin = 25 # define ledPin
 led = PWMLED(ledPin)
 adc = ADCDevice() # Define an ADCDevice class object
 
-def setup():
+def setup_adc():
     global adc
     if(adc.detectI2C(0x48)): # Detect the pcf8591.
         adc = PCF8591()
@@ -21,17 +14,16 @@ def setup():
         adc = ADS7830()
     else:
         print("No correct I2C address found, \n"
-        "Please use command 'i2cdetect -y 1' to check the I2C address! \n"
-        "Program Exit. \n");
+              "Please use command 'i2cdetect -y 1' to check the I2C address! \n"
+              "Program Exit. \n")
         exit(-1)
 
-def photoresistor():
+def read_photoresistor():
     value = adc.analogRead(0)    # read the ADC value of channel 0
     led.value = value / 255.0    # Mapping to PWM duty cycle 
     voltage = value / 255.0 * 3.3
-    print ('ADC Value : %d, Voltage : %.2f'%(value,voltage))
+    print ('ADC Value : %d, Voltage : %.2f' % (value, voltage))
 
-def destroy():
+def destroy_adc():
     led.close()
     adc.close()
-    
