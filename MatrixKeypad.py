@@ -1,28 +1,29 @@
 
-import Keypad   #import module Keypad
+import Keypad   
 import gate
 from time import sleep
 import lcddisplay
 import camera_handler
-ROWS = 4        # number of rows of the Keypad
-COLS = 4        #number of columns of the Keypad
-keys =  [   '1','2','3','A',    #key code
+ROWS = 4        
+COLS = 4        
+keys =  [   '1','2','3','A',    
             '4','5','6','B',
             '7','8','9','C',
             '*','0','#','D'     ]
 
+# predefined names and passwords
 password = {'Adam':'2406#','Richard':'1206#','Steve':'2805#','Kevin':'1904#'}
 
 entrypin=''
-rowsPins = [6, 13, 19, 26]     #connect to the row pinouts of the keypad
-colsPins = [10, 4, 23, 24]     #connect to the column pinouts of the keypad
+rowsPins = [6, 13, 19, 26]    
+colsPins = [10, 4, 23, 24]     
 
 def gatePin():
     global entrypin
-    keypad = Keypad.Keypad(keys,rowsPins,colsPins,ROWS,COLS)    #creat Keypad object
-    keypad.setDebounceTime(50)      #set the debounce time
-    key = keypad.getKey()       #obtain the state of keys
-    if(key != keypad.NULL):     #if there is key pressed, print its key code.
+    keypad = Keypad.Keypad(keys,rowsPins,colsPins,ROWS,COLS)    
+    keypad.setDebounceTime(50)      
+    key = keypad.getKey()       
+    if(key != keypad.NULL):     
         print ("You Pressed Key : %c "%(key))
         entrypin +=key
         lcddisplay.messagedisplay(f'Entered Pin:',entrypin)
@@ -38,14 +39,15 @@ def checkPassword():
     for name,pin in password.items():
         if pin == entrypin:
             print(f'Welcome {name}')
-            lcddisplay.messagedisplay(f'Welcome {name}','Gate Openning')
+            lcddisplay.messagedisplay(f'Welcome {name}','Gate Opening')
             gate.gateOpen()
+            print("Image captured")
             camera_handler.capture()
             sleep(4)
             lcddisplay.lcd1602.clear()
             lcddisplay.messagedisplay('Gate Closing !!')
             gate.gateClose()
-            sleep(1)
+            sleep(2)
             lcddisplay.lcd1602.clear()
             entrypin = ''
             passwordmatch = True

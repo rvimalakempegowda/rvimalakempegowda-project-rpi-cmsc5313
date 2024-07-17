@@ -2,9 +2,9 @@ from gpiozero import PWMLED
 import time
 from ADCDevice import *
 
-ledPin = 25 # define ledPin
+ledPin = 25 
 led = PWMLED(ledPin)
-adc = ADCDevice() # Define an ADCDevice class object
+adc = ADCDevice() 
 
 def setup_adc():
     global adc
@@ -19,8 +19,8 @@ def setup_adc():
         exit(-1)
 
 def read_photoresistor():
-    value = adc.analogRead(0)    # read the ADC value of channel 0
-    led.value = value / 255.0    # Mapping to PWM duty cycle 
+    value = adc.analogRead(0)    
+    led.value = value / 255.0    
     voltage = value / 255.0 * 3.3
     print ('ADC Value : %d, Voltage : %.2f' % (value, voltage))
 

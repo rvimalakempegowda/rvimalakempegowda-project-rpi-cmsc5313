@@ -13,7 +13,7 @@ doc_Temperature_humidity_ref = collection.document(constant.DOCUMENT_TEMPERATURE
 
 def uploadFirebase(temperature, humidity, preTempreature , preHumidity):
     if(preHumidity != humidity or preTempreature !=temperature):
-        print('uploading') 
+        print('updating temperature to firestore') 
         doc_Temperature_humidity_ref.update({u'temp': temperature,'humidity':humidity})  
     return temperature, humidity
 

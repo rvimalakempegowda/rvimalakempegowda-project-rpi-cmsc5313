@@ -1,10 +1,3 @@
-#!/usr/bin/env python3
-########################################################################
-# Filename    : Keypad.py
-# Description : The module of matrix keypad 
-# Author      : freenove
-# modification: 2023/05/15
-########################################################################
 from gpiozero import InputDevice, OutputDevice
 import time
 #class Key:Define some of the properties of Key

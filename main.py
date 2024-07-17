@@ -10,8 +10,8 @@ import distance_sensor
 def main_loop():
     last_temp_check = time.time()
     last_photo_check = time.time()
-    check_interval = 60  # Interval to check temperature, humidity, and photoresistor (in seconds)
-    
+    check_interval = 60  
+    check_photo_interval = 5
     # Setup the ADC for photoresistor
     photoresistor.setup_adc()
 
@@ -32,7 +32,7 @@ def main_loop():
                 last_temp_check = current_time
 
             # Check if it's time to read the photoresistor
-            if current_time - last_photo_check >= check_interval:
+            if current_time - last_photo_check >= check_photo_interval:
                 print("Checking photoresistor...")
                 photoresistor.read_photoresistor()
                 last_photo_check = current_time
@@ -40,18 +40,16 @@ def main_loop():
             # Check the distance sensor continuously
             distance_sensor.check_distance()
 
-            # Short sleep to prevent high CPU usage
             time.sleep(0.01)
 
         except Exception as e:
             print(f"An error occurred: {e}")
-            time.sleep(1)  # Add a delay to avoid rapid repeated errors
+            time.sleep(1)  
 
 if __name__ == "__main__":
     print('Program is starting ...')
     try:
         main_loop()
-    except KeyboardInterrupt:  # Press ctrl-c to end the program.
+    except KeyboardInterrupt:  
         photoresistor.destroy_adc()
         print("Ending program")
-    pause()
